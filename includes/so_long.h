@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 16:57:51 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/21 16:02:55 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/21 16:04:18 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/23 23:05:08 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
-# include <stdlib.h>
 # include <unistd.h>
-# include <stddef.h>
+# include <stdlib.h>
 # include "libft.h"
+# include "get_next_line.h"
+# include "ft_printf.h"
+# include <fcntl.h>
+# include "mlx.h"
 
-char	*get_next_line(int fd);
+
 
 #endif
