@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/31 19:14:09 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/31 19:20:14 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/25 02:21:43 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/25 02:56:30 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#include "so_long.h"
 
-void	ft_putstr_fd(char *s, int fd)
+/* 主函数 */
+
+int	main(int argc, char **argv)
 {
-	int	len;
+	t_game	game;
 
-	len = 0;
-	while (s[len] != '\0')
-		len++;
-	write(fd, s, len);
+	if (argc != 2)
+	{
+		write(1, "Error\n", 6);
+		write(1, "Usage: <map_file.ber>\n", 22);
+		return (1);
+	}
+	return (0);
 }

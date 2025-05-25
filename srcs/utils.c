@@ -1,30 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 13:06:43 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/28 20:45:15 by yufli            ###   ########.fr       */
+/*   Created: 2025/05/25 02:25:27 by yufli             #+#    #+#             */
+/*   Updated: 2025/05/25 02:25:55 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#include "so_long.h"
 
-char	*ft_strrchr(const char *s, int c)
-{
-	int	len;
-
-	len = 0;
-	while (s[len] != '\0')
-		len++;
-	while (len >= 0)
-	{
-		if (s[len] == (char)c)
-			return ((char *)&s[len]);
-		len--;
-	}
-	return (NULL);
-}
+/* 工具函数 */
