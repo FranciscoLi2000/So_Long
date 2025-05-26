@@ -6,7 +6,7 @@
 /*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:57:51 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/21 16:02:55 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/26 16:07:24 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stddef.h>
+# include <fcntl.h>
 # include "libft.h"
 
 char	*get_next_line(int fd);

@@ -6,17 +6,16 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:04:18 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/25 02:52:22 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/26 16:06:59 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <fcntl.h>
+# include "libft.h"
+# include "get_next_line.h"
+# include "ft_printf.h"
 # include "../minilibx_linux/mlx.h"
 
 /* 定义游戏中使用的键码 */
