@@ -6,26 +6,11 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 02:22:25 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/26 16:17:01 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/27 19:16:31 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-/*
-** 初始化游戏数据
-*/
-int	init_game(t_game *game)
-{
-	game->mlx = mlx_init();
-	if (!game->mlx)
-		return (0);
-	game->collected = 0;
-	game->moves = 0;
-	game->game_state = GAME_RUNNING;
-	init_map_data(&game->map);
-	return (1);
-}
 
 /*
 ** 初始化地图数据
@@ -42,6 +27,21 @@ void	init_map_data(t_map *map)
 	map->player_pos.x = 0;
 	map->player_pos.y = 0;
 	map->enemy_pos = NULL;
+}
+
+/*
+** 初始化游戏数据
+*/
+int	init_game(t_game *game)
+{
+	game->mlx = mlx_init();
+	if (!game->mlx)
+		return (0);
+	game->collected = 0;
+	game->moves = 0;
+	game->game_state = GAME_RUNNING;
+	init_map_data(&game->map);
+	return (1);
 }
 
 /*
