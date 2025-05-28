@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 02:25:27 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/27 19:21:39 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/28 22:08:19 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,14 @@ int	key_handler(int keycode, t_game *game)
 	else if (keycode == KEY_D || keycode == KEY_RIGHT)
 		move_player(game, keycode);
 	return (0);
+}
+
+/* 重置玩家位置（用于重新开始游戏） */
+void	reset_player(t_game *game)
+{
+	game->map.player_pos.x = game->map.start_pos.x;
+	game->map.player_pos.y = game->map.start_pos.y;
+	game->collected = 0;
+	game->game_state = GAME_RUNNING;
+	render_game(game);
 }

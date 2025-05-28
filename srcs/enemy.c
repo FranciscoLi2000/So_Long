@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 02:24:52 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/25 02:25:18 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/28 22:14:22 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,50 +35,85 @@ void	init_enemies(t_game *game)
 				game->map.enemy_pos[enemy_count].y = i;
 				enemy_count++;
 			}
+			else if (game->map.grid[i][j] == PLAYER)
+			{
+				game->map.start_pos.x = j;
+				game->map.start_pos.y = i;
+			}
 			j++;
 		}
 		i++;
 	}
 }
 
+/*
+** 检查敌人移动位置是否有效
+*/
+static int	is_valid_enemy_move(t_game *game, int x, int y)
+{
+	if (x < 0 || x >= game->map.width || y < 0 || y >= game->map.height)
+		return (0);
+	if (game->map.grid[y][x] == WALL ||
+		game->map.grid[y][x] == EXIT ||
+		game->map.grid[y][x] == COLLECTIBLE ||
+		game->map.grid[y][x] == ENEMY)
+		return (0);
+	return (1);
+}
+
 /* 移动单个敌人 */
 static void	move_single_enemy(t_game *game, int enemy_index)
 {
-	t_pos	*enemy;
-	int		directions[4][2] = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+	int		directions[4][2] = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 上下左右
 	int		new_x;
 	int		new_y;
 	int		dir;
+	int		attempts;
+	t_pos	*enemy;
 
 	enemy = &game->map.enemy_pos[enemy_index];
-	dir = rand() % 4;
-	new_x = enemy->x + directions[dir][0];
-	new_y = enemy->y + directions[dir][1];
-	if (new_x >= 0 && new_x < game->map.width && new_y >= 0 && new_y < game->map.height
-		&& game->map.grid[new_y][new_x] != WALL
-		&& game->map.grid[new_y][new_x] != EXIT
-		&& game->map.grid[new_y][new_x] != COLLECTIBLE)
+	attempts = 0;
+	while (attempts < 4)
 	{
-		game->map.grid[enemy->y][enemy->x] = EMPTY;
-		game->map.grid[new_y][new_x] = ENEMY;
-		enemy->x = new_x;
-		enemy->y = new_y;
+		dir = rand() % 4;
+		new_x = enemy->x + directions[dir][0];
+		new_y = enemy->y + directions[dir][1];
+		if (is_valid_enemy_move(game, new_x, new_y))
+		{
+			game->map.grid[enemy->y][enemy->x] = EMPTY;
+			game->map.grid[new_y][new_x] = ENEMY;
+			enemy->x = new_x;
+			enemy->y = new_y;
+			break ;
+		}
+		attempts++;
 	}
 }
 
 /* 移动所有敌人 */
-void	move_enemies(t_game *game)
+int	move_enemies(t_game *game)
 {
 	int	i;
+	int	moved;
 
+	moved = 0;
 	if (game->game_state != GAME_RUNNING)
-		return ;
+		return (0);
 	i = 0;
 	while (i < game->map.enemies)
 	{
-		move_single_enemy(game, i);
+		if (rand() % 5 == 0)
+		{
+			move_single_enemy(game, i);
+			moved = 1;
+		}
 		i++;
 	}
-	if (check_enemy_collision(game))
+	if (moved && check_enemy_collision(game))
+	{
+		// 已在check_enemy_collision中处理碰撞逻辑
+	}
+	if (moved)
 		render_game(game);
+	return (moved);
 }

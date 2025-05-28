@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:04:18 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/26 16:06:59 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/28 22:15:25 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_map
 	int		enemies;        // 敌人数量
 	t_pos	player_pos;     // 玩家位置
 	t_pos	*enemy_pos;     // 敌人位置数组
+	t_pos	start_pos;      // 玩家起始位置
 }	t_map;
 
 /* 游戏结构 */
@@ -117,6 +118,7 @@ int		move_player(t_game *game, int key);
 int		check_collision(t_game *game, int x, int y);
 void	collect_item(t_game *game, int x, int y);
 int		check_exit(t_game *game);
+void	reset_player(t_game *game);
 
 /* 敌人相关函数 - enemy.c */
 void	move_enemies(t_game *game);
