@@ -6,7 +6,7 @@
 /*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:32:36 by yufli             #+#    #+#             */
-/*   Updated: 2025/02/18 23:11:56 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/28 23:25:29 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ static char	*read_buffer(int fd, char *buffer)
 	if (!tmp)
 		return (NULL);
 	bytes_read = 1;
-	while (!ft_strchr(buffer, '\n') && bytes_read > 0)
+	if (!buffer)
+		buffer = ft_strdup("");
+	while (bytes_read > 0 && !ft_strchr(buffer, '\n'))
 	{
 		bytes_read = read(fd, tmp, BUFFER_SIZE);
 		if (bytes_read == -1)

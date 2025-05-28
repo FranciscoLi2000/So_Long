@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 02:24:52 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/28 22:14:22 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/28 23:26:30 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ int	move_enemies(t_game *game)
 	}
 	if (moved && check_enemy_collision(game))
 	{
-		// 已在check_enemy_collision中处理碰撞逻辑
 	}
 	if (moved)
 		render_game(game);

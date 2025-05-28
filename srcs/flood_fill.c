@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:28:05 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/27 19:35:44 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/28 23:10:49 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	**create_map_copy(t_map *map)
 	i = 0;
 	while (i < map->height)
 	{
-		copy[i] = strdup(map->grid[i]);
+		copy[i] = ft_strdup(map->grid[i]);
 		if (!copy[i])
 		{
 			while (--i >= 0)
@@ -45,20 +45,20 @@ static char	**create_map_copy(t_map *map)
 */
 static void	flood_fill(char **map, int height, int width, t_pos pos)
 {
-	t_pos	up;
-	t_pos	down;
-	t_pos	left;
-	t_pos	right;
+	t_pos	up = {pos.x, pos.y - 1};
+	t_pos	down = {pos.x, pos.y + 1};
+	t_pos	left = {pos.x - 1, pos.y};
+	t_pos	right = {pos.x + 1, pos.y};
+	int		row;
+	int		col;
 
-	if (pos.y < 0 || pos.y >= height || pos.x < 0 || pos.x >= width)
+	row = pos.y;
+	col = pos.x;
+	if (row < 0 || col < 0 || row >= height || col >= width)
 		return ;
-	if (map[pos.y][pos.x] == '1' || map[pos.y][pos.x] == 'F')
+	if (map[row][col] == '1' || map[row][col] == 'F')
 		return ;
-	map[pos.y][pos.x] = 'F';
-	up = {pos.x, pos.y - 1};
-	down = {pos.x, pos.y + 1};
-	left = {pos.x - 1, pos.y};
-	right = {pos.x + 1, pos.y};
+	map[row][col] = 'F';	
 	flood_fill(map, height, width, up);
 	flood_fill(map, height, width, down);
 	flood_fill(map, height, width, left);
@@ -122,7 +122,7 @@ int	validate_map(t_game *game)
 	i = 0;
 	while (i < game->map.height)
 	{
-		if ((int)strlen(game->map.grid[i]) != width)
+		if ((int)ft_strlen(game->map.grid[i]) != width)
 			return (0);
 		i++;
 	}

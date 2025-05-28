@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:04:18 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/28 22:15:25 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/28 22:39:56 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int		check_exit(t_game *game);
 void	reset_player(t_game *game);
 
 /* 敌人相关函数 - enemy.c */
-void	move_enemies(t_game *game);
+int		move_enemies(t_game *game);
 int		check_enemy_collision(t_game *game);
 
 /* 工具函数 - utils.c */
