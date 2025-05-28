@@ -6,14 +6,14 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 02:25:27 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/28 22:08:19 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/29 00:34:58 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 /*
-** 错误退出函数
+** Error exit function
 */
 void	error_exit(char *message)
 {
@@ -22,7 +22,7 @@ void	error_exit(char *message)
 }
 
 /*
-** 释放游戏资源函数
+** Free game resources function
 */
 void	free_game(t_game *game)
 {
@@ -38,17 +38,17 @@ void	free_game(t_game *game)
 		mlx_destroy_image(game->mlx, game->img_exit.img);
 	if (game->img_floor.img)
 		mlx_destroy_image(game->mlx, game->img_floor.img);
-	if (game->img_enemy.img)
-		mlx_destroy_image(game->mlx, game->img_enemy.img);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
+	{
 		mlx_destroy_display(game->mlx);
-	free(game->mlx);
+		free(game->mlx);
+	}
 }
 
 /*
-** 关闭游戏函数
+** Close game function
 */
 int	close_game(t_game *game)
 {
@@ -58,7 +58,7 @@ int	close_game(t_game *game)
 }
 
 /*
-** 键盘事件处理函数
+** Keyboard event handler function
 */
 int	key_handler(int keycode, t_game *game)
 {
@@ -75,14 +75,4 @@ int	key_handler(int keycode, t_game *game)
 	else if (keycode == KEY_D || keycode == KEY_RIGHT)
 		move_player(game, keycode);
 	return (0);
-}
-
-/* 重置玩家位置（用于重新开始游戏） */
-void	reset_player(t_game *game)
-{
-	game->map.player_pos.x = game->map.start_pos.x;
-	game->map.player_pos.y = game->map.start_pos.y;
-	game->collected = 0;
-	game->game_state = GAME_RUNNING;
-	render_game(game);
 }

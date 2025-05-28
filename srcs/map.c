@@ -6,15 +6,12 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 02:23:10 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/27 19:27:55 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/29 00:30:42 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/*
-** 计算文件行数
-*/
 static int	count_lines(char *filename)
 {
 	int		fd;
@@ -43,9 +40,6 @@ static int	count_lines(char *filename)
 	return (lines);
 }
 
-/*
-** 读取地图文件
-*/
 static char	**read_map_file(char *filename, int height)
 {
 	int		fd;
@@ -74,9 +68,6 @@ static char	**read_map_file(char *filename, int height)
 	return (map);
 }
 
-/*
-** 解析地图元素
-*/
 static void	parse_map_elements(t_game *game)
 {
 	int	i;
@@ -85,7 +76,6 @@ static void	parse_map_elements(t_game *game)
 	game->map.collectibles = 0;
 	game->map.exits = 0;
 	game->map.players = 0;
-	game->map.enemies = 0;
 	i = 0;
 	while (i < game->map.height)
 	{
@@ -102,9 +92,8 @@ static void	parse_map_elements(t_game *game)
 				game->map.player_pos.x = j;
 				game->map.player_pos.y = i;
 			}
-			else if (game->map.grid[i][j] == ENEMY)
-				game->map.enemies++;
-			else if (game->map.grid[i][j] != EMPTY && game->map.grid[i][j] != WALL)
+			else if (game->map.grid[i][j] != EMPTY &&
+				game->map.grid[i][j] != WALL)
 				error_exit("Invalid character in map");
 			j++;
 		}
@@ -112,9 +101,6 @@ static void	parse_map_elements(t_game *game)
 	}
 }
 
-/*
-** 解析地图
-*/
 int	parse_map(t_game *game, char *filename)
 {
 	int	height;

@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:04:18 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/28 22:39:56 by yufli            ###   ########.fr       */
+/*   Updated: 2025/05/29 00:26:45 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "ft_printf.h"
 # include "../minilibx_linux/mlx.h"
 
-/* 定义游戏中使用的键码 */
+/* Key codes used in the game */
 # define KEY_ESC 65307
 # define KEY_W 119
 # define KEY_A 97
@@ -29,30 +29,29 @@
 # define KEY_DOWN 65364
 # define KEY_RIGHT 65363
 
-/* 定义游戏中的元素 */
+/* Game elements */
 # define EMPTY '0'
 # define WALL '1'
 # define COLLECTIBLE 'C'
 # define EXIT 'E'
 # define PLAYER 'P'
-# define ENEMY 'X'  // 添加敌人元素
 
-/* 定义图像大小 */
+/* Image size */
 # define IMG_SIZE 32
 
-/* 游戏状态 */
+/* Game states */
 # define GAME_RUNNING 0
 # define GAME_WIN 1
 # define GAME_LOSE 2
 
-/* 坐标结构 */
+/* Position structure */
 typedef struct s_pos
 {
 	int	x;
 	int	y;
 }	t_pos;
 
-/* 图像结构 */
+/* Image structure */
 typedef struct s_img
 {
 	void	*img;
@@ -64,67 +63,60 @@ typedef struct s_img
 	int		height;
 }	t_img;
 
-/* 游戏地图结构 */
+/* Game map structure */
 typedef struct s_map
 {
-	char	**grid;         // 地图网格
-	int		width;          // 地图宽度
-	int		height;         // 地图高度
-	int		collectibles;   // 收集品总数
-	int		exits;          // 出口数量
-	int		players;        // 玩家数量
-	int		enemies;        // 敌人数量
-	t_pos	player_pos;     // 玩家位置
-	t_pos	*enemy_pos;     // 敌人位置数组
-	t_pos	start_pos;      // 玩家起始位置
+	char	**grid;
+	int		width;
+	int		height;
+	int		collectibles;
+	int		exits;
+	int		players;
+	t_pos	player_pos;
+	t_pos	start_pos;
 }	t_map;
 
-/* 游戏结构 */
+/* Game structure */
 typedef struct s_game
 {
-	void	*mlx;           // MLX连接指针
-	void	*win;           // 窗口指针
-	t_map	map;            // 游戏地图
-	t_img	img_player;     // 玩家图像
-	t_img	img_wall;       // 墙壁图像
-	t_img	img_collectible;// 收集品图像
-	t_img	img_exit;       // 出口图像
-	t_img	img_floor;      // 地板图像
-	t_img	img_enemy;      // 敌人图像
-	int		collected;      // 已收集的收集品数量
-	int		moves;          // 移动次数
-	int		game_state;     // 游戏状态
+	void	*mlx;
+	void	*win;
+	t_map	map;
+	t_img	img_player;
+	t_img	img_wall;
+	t_img	img_collectible;
+	t_img	img_exit;
+	t_img	img_floor;
+	int		collected;
+	int		moves;
+	int		game_state;
 }	t_game;
 
-/* 初始化函数 - init.c */
+/* Initialization functions */
 int		init_game(t_game *game);
 int		init_window(t_game *game);
 int		init_images(t_game *game);
 void	init_map_data(t_map *map);
 
-/* 地图处理函数 - map.c */
+/* Map handling functions */
 int		parse_map(t_game *game, char *filename);
 int		validate_map(t_game *game);
 void	free_map(t_map *map);
 
-/* 渲染函数 - render.c */
+/* Rendering functions */
 void	render_game(t_game *game);
 void	render_map(t_game *game);
 void	render_player(t_game *game);
 void	render_ui(t_game *game);
 
-/* 玩家相关函数 - player.c */
+/* Player functions */
 int		move_player(t_game *game, int key);
 int		check_collision(t_game *game, int x, int y);
 void	collect_item(t_game *game, int x, int y);
 int		check_exit(t_game *game);
 void	reset_player(t_game *game);
 
-/* 敌人相关函数 - enemy.c */
-int		move_enemies(t_game *game);
-int		check_enemy_collision(t_game *game);
-
-/* 工具函数 - utils.c */
+/* Utility functions */
 void	error_exit(char *message);
 int		key_handler(int keycode, t_game *game);
 int		close_game(t_game *game);

@@ -56,6 +56,5 @@ int	main(int argc, char **argv)
 	mlx_key_hook(game.win, key_handler, &game);
 	mlx_hook(game.win, 17, 0, close_game, &game);
 	mlx_loop(game.mlx);
-	mlx_loop_hook(game.mlx, (int (*)())move_enemies, &game);
 	return (0);
 }

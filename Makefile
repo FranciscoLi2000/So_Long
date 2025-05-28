@@ -10,80 +10,91 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= so_long
+NAME = so_long
 
-# 编译器和编译选项
-CC		= cc
-CFLAGS		= -Wall -Wextra -Werror -g
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g
 
-# 目录
-SRC_DIR		= srcs
-INC_DIR 	= includes
-LIBFT_DIR	= libft
-MLX_DIR		= minilibx_linux
+# Directories
+SRCDIR = srcs
+INCDIR = includes
+OBJDIR = objs
 
-# 源文件
-SRC_FILES	= main.c init.c map.c render.c player.c \
-		enemy.c utils.c flood_fill.c
-SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
-OBJS		= $(SRCS:.c=.o)
+# Source files
+SRCS = $(SRCDIR)/main.c \
+       $(SRCDIR)/init.c \
+       $(SRCDIR)/map.c \
+       $(SRCDIR)/render.c \
+       $(SRCDIR)/player.c \
+       $(SRCDIR)/flood_fill.c \
+       $(SRCDIR)/utils.c
 
-# 头文件
-INCLUDES	= -I$(INC_DIR) -I$(MLX_DIR)
+# Object files
+OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-# 库
-LIBFT		= $(LIBFT_DIR)/libft.a
-MLX		= $(MLX_DIR)/libmlx_Linux.a
-LIBS		= -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx_Linux -lXext -lX11 -lm
+# Libraries
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-# 规则
+MLX_DIR = minilibx_linux
+MLX = $(MLX_DIR)/libmlx.a
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
+
+# Include directories
+INCLUDES = -I$(INCDIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
+
+# Colors for pretty output
+GREEN = \033[0;32m
+RED = \033[0;31m
+YELLOW = \033[0;33m
+RESET = \033[0m
+
 all: $(NAME)
 
-# 编译libft
+$(NAME): $(LIBFT) $(MLX) $(OBJDIR) $(OBJS)
+	@echo "$(GREEN)Linking $(NAME)...$(RESET)"
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
+	@echo "$(GREEN)$(NAME) created successfully!$(RESET)"
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@echo "$(YELLOW)Compiling $<...$(RESET)"
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
+
 $(LIBFT):
-	@echo "Compiling libft..."
+	@echo "$(GREEN)Building libft...$(RESET)"
 	@make -C $(LIBFT_DIR)
 
-# 编译minilibx
 $(MLX):
-	@echo "Compiling minilibx..."
+	@echo "$(GREEN)Building MLX...$(RESET)"
 	@make -C $(MLX_DIR)
 
-# 编译目标文件
-%.o: %.c
-	@echo "Compiling $<..."
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-# 编译最终可执行文件
-$(NAME): $(LIBFT) $(MLX) $(OBJS)
-	@echo "Linking $(NAME)..."
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
-	@echo "$(NAME) compiled successfully!"
-
-# 清理目标文件
 clean:
-	@echo "Cleaning object files..."
-	@rm -f $(OBJS)
+	@echo "$(RED)Cleaning object files...$(RESET)"
+	@rm -rf $(OBJDIR)
 	@make -C $(LIBFT_DIR) clean
 	@make -C $(MLX_DIR) clean
 
-# 清理所有生成的文件
 fclean: clean
-	@echo "Cleaning executable and libraries..."
+	@echo "$(RED)Cleaning $(NAME)...$(RESET)"
 	@rm -f $(NAME)
 	@make -C $(LIBFT_DIR) fclean
 
-# 重新编译
 re: fclean all
 
-# 运行游戏（使用默认地图）
-run: all
-	@echo "Running $(NAME) with default map..."
-	@./$(NAME) maps/map1.ber
+# Norminette check
+norm:
+	@echo "$(YELLOW)Checking norminette...$(RESET)"
+	@norminette $(SRCDIR) $(INCDIR)
 
-# 检查内存泄漏
-valgrind: all
-	@echo "Running valgrind on $(NAME)..."
-	@valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) maps/map1.ber
+# Test with sample map
+test: $(NAME)
+	./$(NAME) maps/map1.ber
 
-.PHONY: all clean fclean re run valgrind
+# Debug version
+debug: CFLAGS += -fsanitize=address -g3
+debug: re
+
+.PHONY: all clean fclean re norm test debug
