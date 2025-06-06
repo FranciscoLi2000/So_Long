@@ -3,22 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/27 14:23:24 by yufli             #+#    #+#             */
-/*   Updated: 2024/12/27 14:25:43 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/04 00:38:37 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/04 00:38:41 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
 
-int	ft_strlen(const char *str)
+int	ft_strlen(char *str)
 {
-	int	len;
-
-	len = 0;
-	while (str[len] != '\0')
-		len++;
-	return (len);
+	if (*str == '\0')
+		return (0);
+	return (1 + ft_strlen(str + 1));
 }

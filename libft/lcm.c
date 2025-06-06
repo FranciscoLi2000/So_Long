@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   lcm.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/27 15:43:43 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/04 00:09:25 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/04 02:46:42 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/04 02:54:23 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dest, const void *src, unsigned int n)
+unsigned int	lcm(unsigned int a, unsigned int b)
 {
-	unsigned int	i;
+	unsigned int	g;
 
-	if (dest == src)
-		return (dest);
-	i = 0;
-	while (i < n)
+	if (a > b)
+		g = a;
+	else
+		g = b;
+	while (1)
 	{
-		((char *)dest)[i] = ((const char *)src)[i];
-		i++;
+		if ((g % a == 0) && (g % b == 0))
+			return (g);
+		g++;
 	}
-	return (dest);
 }

@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/27 15:43:43 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/04 00:09:25 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/04 00:44:53 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/04 00:45:32 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	*ft_memcpy(void *dest, const void *src, unsigned int n)
+void	ft_swap(int *a, int *b)
 {
-	unsigned int	i;
+	int	tmp;
 
-	if (dest == src)
-		return (dest);
-	i = 0;
-	while (i < n)
-	{
-		((char *)dest)[i] = ((const char *)src)[i];
-		i++;
-	}
-	return (dest);
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }

@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_int.c                                        :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/24 17:26:27 by yufli             #+#    #+#             */
-/*   Updated: 2025/05/18 23:36:09 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/04 01:02:18 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/04 01:09:39 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	print_int(t_print *tab)
+char	*ft_strrev(char *str)
 {
-	char	*str;
-	int		num;
+	char	tmp;
+	int		len;
+	int		i;
 
-	num = va_arg(tab->args, int);
-	str = ft_itoa(num);
-	if (!str)
-		return ;
-	tab->tl += write(1, str, ft_strlen(str));
-	free(str);
+	len = 0;
+	while (str[len])
+		len++;
+	i = 0;
+	while (i < len - 1)
+	{
+		tmp = str[i];
+		str[i] = str[len - 1];
+		str[len - 1] = tmp;
+		len--;
+		i++;
+	}
+	return (str);
 }
