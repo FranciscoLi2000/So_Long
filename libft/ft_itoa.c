@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:07:29 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/04 00:08:16 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/06 23:21:54 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@ static int	num_len(int n)
 {
 	int	len;
 
-	if (n <= 0)
-		len = 0;
-	while (n)
+	if (n == 0)
+		return (1);
+	len = 0;
+	if (n < 0)
+		len = 1;
+	while (n != 0)
 	{
 		n /= 10;
 		len++;

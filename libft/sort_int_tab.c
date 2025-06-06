@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   sort_int_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/04 01:37:16 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/06 18:14:02 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/04 08:55:59 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/04 08:59:19 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr(int nb)
+void	sort_int_tab(int *tab, unsigned int size)
 {
-	if (nb == -2147483648)
+	unsigned int	i;
+	unsigned int	j;
+	int				tmp;
+
+	i = 0;
+	while (i < size - 1)
 	{
-		write(1, "-2147483648", 11);
-		return ;
+		j = i;
+		while (j < size)
+		{
+			if (tab[i] > tab[j])
+			{
+				tmp = tab[i];
+				tab[i] = tab[j];
+				tab[j] = tmp;
+			}
+			j++;
+		}
+		i++;
 	}
-	if (nb < 0)
-	{
-		write(1, "-", 1);
-		nb = -nb;
-	}
-	if (nb >= 10)
-		ft_putnbr(nb / 10);
-	ft_putchar(nb % 10 + '0');
 }

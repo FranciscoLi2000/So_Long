@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:38:37 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/04 00:38:41 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/06 23:28:10 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 int	ft_strlen(char *str)
 {
-	if (*str == '\0')
+	int	i;
+
+	i = 0;
+	if (!str)
 		return (0);
-	return (1 + ft_strlen(str + 1));
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
