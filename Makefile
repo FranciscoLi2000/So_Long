@@ -6,7 +6,7 @@
 #    By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/08 17:23:02 by yufli             #+#    #+#              #
-#    Updated: 2025/06/08 18:47:50 by yufli            ###   ########.fr        #
+#    Updated: 2025/06/08 19:13:23 by yufli            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS		= $(SRC_DIR)/map.c \
 		$(SRC_DIR)/init.c \
 		$(SRC_DIR)/render.c \
 		$(SRC_DIR)/utils.c \
+		$(SRC_DIR)/move.c \
 		$(SRC_DIR)/main.c
 
 OBJS		= $(SRCS:.c=.o)

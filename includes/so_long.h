@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:20:53 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 18:26:52 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/08 19:53:06 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_ff_input
 	char		**map;
 	t_point		size;
 	t_point		start;
-	int			*collections;
+	int			*coins;
 	int			*found_exit;
 }	t_ff_input;
 
@@ -85,7 +85,7 @@ int		check_cell(t_map *map, int i, int j);
 int		check_path(t_map map);
 
 /* Flood fill */
-void	start_flood_fill(t_ff_input input);
+void	flood_fill(t_ff_input input);
 
 /* Utilities */
 char	**duplicate_map(char **src);
@@ -93,6 +93,7 @@ void	free_map_copy(char **map);
 t_point	find_player(char **map);
 int		count_collectibles(char **map);
 int		count_lines(char **grid);
+int		handle_exit(void *param);
 
 /* init the game */
 void	init_window(t_game *game);
@@ -101,6 +102,9 @@ void	init_game(t_game *game);
 
 /* render the game */
 void	render_map(t_game *game);
+
+/* move the player */
+int		handle_key(int key, t_game *game);
 
 /* Error handling */
 void	error_exit(char *msg);

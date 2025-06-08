@@ -6,13 +6,58 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:15:21 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 11:17:25 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/08 19:10:34 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 /* 判断是否达到胜利条件 */
-
 /* 每次玩家有效移动后增加步数，并在 shell 输出 */
+static void	move_player(t_game *g, int dx, int dy)
+{
+	int		new_x;
+	int		new_y;
+	char	next_tile;
 
+	new_x = g->map.player_x + dx;
+	new_y = g->map.player_y + dy;
+	next_tile = g->map.grid[new_y][new_x];
+	if (next_tile == WALL)
+		return ;
+	if (next_tile == COLLECTIBLE)
+		g->map.collectibles--;
+	if (next_tile == EXIT && g->map.collectibles > 0)
+		return ;
+	if (next_tile == EXIT && g->map.collectibles == 0)
+	{
+		ft_printf("You win in %d moves!\n", ++g->moves);
+		exit(0);
+	}
+	g->map.grid[g->map.player_y][g->map.player_x] = EMPTY;
+	g->map.player_x = new_x;
+	g->map.player_y = new_y;
+	g->map.grid[new_y][new_x] = PLAYER;
+	g->moves++;
+	ft_printf("Moves: %d\n", g->moves);
+	render_map(g);
+}
+
+/* 处理按键事件 */
+int	handle_key(int key, t_game *g)
+{
+	if (key == 65307)
+	{
+		ft_printf("Game closed.\n");
+		exit(0);
+	}
+	else if (key == 'w' || key == 'W')
+		move_player(g, 0, -1);
+	else if (key == 's' || key == 'S')
+		move_player(g, 0, 1);
+	else if (key == 'a' || key == 'A')
+		move_player(g, -1, 0);
+	else if (key == 'd' || key == 'D')
+		move_player(g, 1, 0);
+	return (0);
+}

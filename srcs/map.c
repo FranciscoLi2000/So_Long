@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:11:27 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 12:07:56 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/08 19:36:12 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ char	**read_map(char *filename)
 		free(tmp);
 		line = get_next_line(fd);
 	}
+	ft_printf("FULL MAP:\n%s\n", map_str);
 	close(fd);
 	map = ft_split(map_str, '\n');
+	ft_printf("MAP_STR = [%s]\n", map_str);
 	free(map_str);
 	return (map);
 }

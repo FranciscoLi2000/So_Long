@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 18:15:34 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 18:26:26 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/08 19:15:10 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,11 @@ int	count_lines(char **grid)
 	while (grid[i])
 		i++;
 	return (i);
+}
+
+int	handle_exit(void *param)
+{
+	(void)param;
+	ft_printf("Game closed with [X]\n");
+	exit(0);
 }
