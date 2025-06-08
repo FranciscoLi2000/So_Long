@@ -5,71 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/07 16:05:10 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/07 21:35:36 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/08 11:20:53 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/08 17:44:22 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "../libft/includes/libft.h"
-# include "../libft/includes/get_next_line.h"
-# include "../libft/includes/ft_printf.h"
-# include "../minilibx_linux/mlx.h"
-# include "../minilibx_linux/mlx_int.h"
-# include <stdlib.h>
-# include <unistd.h>
+/* Libraries */
+# include "libft.h"
+# include "get_next_line.h"
+# include "ft_printf.h"
 # include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <mlx.h>
+# include <mlx_int.h>
 
-# define TILE_SIZE 64
-# define WINDOW_TITLE "Jackie Chan: Escape the British Museum"
-# define KEY_ESC 65307
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define EMPTY '0'
+/* Constants (Optional for readability) */
 # define WALL '1'
-# define COLLECTIBLE 'C'
-# define EXIT 'E'
+# define EMPTY '0'
 # define PLAYER 'P'
+# define EXIT 'E'
+# define COLLECTIBLE 'C'
+# define TILE_SIZE 64
 
-typedef struct s_image
-{
-	void	*img;
-	int		width;
-	int		height;
-}	t_image;
-
-typedef struct s_map
-{
-	char	**grid;
-	int		width;
-	int		height;
-	int		collectibles;
-	int		exits;
-	int		players;
-	int		collected;
-	int		player_x;
-	int		player_y;
-	int		exit_x;
-	int		exit_y;
-}	t_map;
-
-typedef struct s_game
-{
-	void	*mlx;
-	void	*win;
-	t_map	map;
-	t_image	img_player;
-	t_image	img_wall;
-	t_image	img_collectible;
-	t_image	img_exit;
-	t_image	img_floor;
-	int		moves;
-	int		game_over;
-}	t_game;
+/* Structs */
 
 typedef struct s_point
 {
@@ -77,24 +39,61 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
-int		parse_map(t_game *game, char *filename);
-void	free_map(t_map *map);
+typedef struct s_map
+{
+	char	**grid;
+	int		width;
+	int		height;
+	int		player_x;
+	int		player_y;
+	int		exit_x;
+	int		exit_y;
+	int		players;
+	int		exits;
+	int		collectibles;
+}	t_map;
+
+typedef struct s_ff_input
+{
+	char		**map;
+	t_point		size;
+	t_point		start;
+	int			*collections;
+	int			*found_exit;
+}	t_ff_input;
+
+typedef struct s_game
+{
+	t_map	map;
+	void	*mlx;
+	void	*win;
+	void	*img_wall;
+	void	*img_floor;
+	void	*img_player;
+	void	*img_exit;
+	void	*img_collect;
+	int		moves;
+}	t_game;
+
+/* Map parsing & validation */
+char	**read_map(char *filename);
 int		validate_map(t_map *map);
-void	flood_fill(char **tab, t_point size, t_point begin);
-int		init_game(t_game *game);
-int		load_images(t_game *game);
-void	init_map_data(t_map *map);
-void	render_game(t_game *game);
-void	render_moves(t_game *game);
-int		key_press(int keycode, t_game *game);
-int		close_window(t_game *game);
-int		move_player(t_game *game, int new_x, int new_y);
-void	check_collectible(t_game *game, int x, int y);
-void	check_exit(t_game *game);
-char	**duplicate_map(t_map *map);
-int		is_exit_reachable(char **tmp_map, int height);
-int		validate_structure(t_map *map);
-void	error_exit(char *message);
-void	clean_exit(t_game *game, int status);
+int		check_rectangle(t_map *map);
+int		check_walls(t_map *map);
+int		check_elements(t_map *map);
+int		check_cell(t_map *map, int i, int j);
+int		check_path(t_map map);
+
+/* Flood fill */
+void	start_flood_fill(t_ff_input input);
+
+/* Utilities */
+char	**duplicate_map(char **src);
+void	free_map_copy(char **map);
+t_point	find_player(char **map);
+int		count_collectibles(char **map);
+
+/* Error handling */
+void	error_exit(char *msg);
 
 #endif

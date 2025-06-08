@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/08 11:17:30 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 17:28:02 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/08 11:13:48 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/08 11:14:34 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/* ESC 和窗口关闭时释放资源退出 */
-/* 错误退出函数 打印错误信息并退出程序 */
-void	error_exit(char *message)
-{
-	ft_putstr_fd("Error\n", 2);
-	ft_putstr_fd(message, 2);
-	ft_putstr_fd("\n", 2);
-	exit(EXIT_FAILURE);
-}
+/* 渲染场景 */
 
-int	main(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-	ft_printf("map test OK\n");
-	return (0);
-}
+/* 将地图转化为图像元素渲染 */
+
+/* 每次玩家移动后刷新画面 */
+

@@ -5,58 +5,58 @@
 #                                                     +:+ +:+         +:+      #
 #    By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/07 16:00:11 by yufli             #+#    #+#              #
-#    Updated: 2025/06/07 19:02:53 by yufli            ###   ########.fr        #
+#    Created: 2025/06/08 17:23:02 by yufli             #+#    #+#              #
+#    Updated: 2025/06/08 17:57:50 by yufli            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= so_long
 
-CC		= cc
-CFLAGS		= -Wall -Wextra -Werror
-RM		= rm -f
-
-SRCS_DIR	= srcs
-INCS_DIR	= includes
+# Directories
+SRC_DIR		= srcs
+INC_DIR		= includes
 LIBFT_DIR	= libft
-MLX_DIR		= minilibx_linux
 
-LIBFT		= $(LIBFT_DIR)/libft.a
-MLX		= $(MLX_DIR)/libmlx.a
+# Source files
+SRCS		= $(SRC_DIR)/map.c \
+		$(SRC_DIR)/map_utils_1.c \
+		$(SRC_DIR)/map_utils_2.c \
+		$(SRC_DIR)/flood_fill.c \
+		$(SRC_DIR)/init.c \
+		$(SRC_DIR)/main.c
 
-INCS		= -I$(INCS_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
-
-SRCS_FILES	= flood_fill.c game_events.c game_init.c game_logic.c \
-		game_render.c main.c map_parser.c map_validator.c
-
-SRCS		= $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 OBJS		= $(SRCS:.c=.o)
 
-LIBS		= -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+CC		= cc
+CFLAGS		= -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBFT_DIR)/includes
 
-all: $(NAME)
+LIBFT		= $(LIBFT_DIR)/libft.a
 
-$(NAME): $(LIBFT) $(MLX) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+# Colors
+GREEN		= \033[1;32m
+RED		= \033[1;31m
+YELLOW		= \033[1;33m
+RESET		= \033[0m
+
+all: $(LIBFT) $(NAME)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	@printf "$(YELLOW)Compiling libft...$(RESET)\n"
+	@make -C $(LIBFT_DIR)
 
-$(MLX):
-	$(MAKE) -C $(MLX_DIR)
-
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
+$(NAME): $(OBJS)
+	@$(CC) $(CFLAGS) $^ $(LIBFT) -o $(NAME)
+	@printf "$(GREEN)Compilation successful: $(NAME)$(RESET)\n"
 
 clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
-	$(MAKE) -C $(MLX_DIR) clean
-	$(RM) $(OBJS)
+	@rm -f $(OBJS)
+	@make -C $(LIBFT_DIR) clean
+	@printf "$(YELLOW)Temporary object files cleaned.$(RESET)\n"
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
-	$(RM) $(MLX)
-	$(RM) $(NAME)
+	@rm -f $(NAME)
+	@make -C $(LIBFT_DIR) fclean
+	@printf "$(RED)Executable and objects removed.$(RESET)\n"
 
 re: fclean all
 

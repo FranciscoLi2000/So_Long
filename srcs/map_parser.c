@@ -12,6 +12,42 @@
 
 #include "so_long.h"
 
+/* 检查文件扩展名是否为.ber */
+static int	check_file_extension(char *filename)
+{
+	int	len;
+
+	len = ft_strlen(filename);
+	if (len < 5)
+		return (0);
+	if (ft_strncmp(filename + len - 4, ".ber", 4) != 0)
+		return (0);
+	return (1);
+}
+
+/* 计算地图的高度（行数） */
+static int	get_map_height(char *filename)
+{
+	int		fd;
+	int		height;
+	char	*line;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	height = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		height++;
+		free(line);
+	}
+	close(fd);
+	return (height);
+}
+
 /* 读取地图文件并填充地图数据结构 */
 static int	read_map(t_map *map, char *filename)
 {
@@ -44,21 +80,26 @@ static int	read_map(t_map *map, char *filename)
 	return (1);
 }
 
-/* Helper function to allocate memory for the map grid */
-static int	allocate_map_grid(t_map *map)
+/* 释放地图内存 */
+void	free_map(t_map *map)
 {
-	map->grid = (char **)malloc(sizeof(char *) * (map->height + 1));
+	int	i;
+
+	i = 0;
 	if (!map->grid)
+		return ;
+	while (i < map->height)
 	{
-		error_exit("Grid memory allocation failed.");
-		return (0);
+		if (map->grid[i])
+			free(map->grid[i]);
+		i++;
 	}
-	map->grid[map->height] = NULL;
-	return (1);
+	free(map->grid);
+	map->grid = NULL;
 }
 
-/* Helper function to validate the file extension and map height */
-static int	validate_file_and_height(t_game *game, char *filename)
+/* 解析地图文件 */
+int	parse_map(t_game *game, char *filename)
 {
 	if (!check_file_extension(filename))
 	{
@@ -71,16 +112,13 @@ static int	validate_file_and_height(t_game *game, char *filename)
 		error_exit("Failed to read map or map is empty");
 		return (0);
 	}
-	return (1);
-}
-
-/* 解析地图文件 */
-int	parse_map(t_game *game, char *filename)
-{
-	if (!validate_file_and_height(game, filename))
+	game->map.grid = (char **)malloc(sizeof(char *) * (game->map.height + 1));
+	if (!game->map.grid)
+	{
+		error_exit("Grid memory allocation failed.");
 		return (0);
-	if (!allocate_map_grid(&game->map))
-		return (0);
+	}
+	game->map.grid[game->map.height] = NULL;
 	if (!read_map(&game->map, filename))
 	{
 		error_exit("Failed to read map data");

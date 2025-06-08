@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/08 11:17:30 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 17:28:02 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/08 11:15:21 by yufli             #+#    #+#             */
+/*   Updated: 2025/06/08 11:17:25 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/* ESC 和窗口关闭时释放资源退出 */
-/* 错误退出函数 打印错误信息并退出程序 */
-void	error_exit(char *message)
-{
-	ft_putstr_fd("Error\n", 2);
-	ft_putstr_fd(message, 2);
-	ft_putstr_fd("\n", 2);
-	exit(EXIT_FAILURE);
-}
+/* 判断是否达到胜利条件 */
 
-int	main(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-	ft_printf("map test OK\n");
-	return (0);
-}
+/* 每次玩家有效移动后增加步数，并在 shell 输出 */
+
