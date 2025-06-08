@@ -6,22 +6,20 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:13:48 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 18:21:55 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/09 00:50:33 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/* 渲染场景 */
-
-/* 将地图转化为图像元素渲染 */
-
-/* 每次玩家移动后刷新画面 */
-
 static void	put_tile(t_game *g, void *img, int x, int y)
 {
-	mlx_put_image_to_window(g->mlx, g->win, img,
-		x * TILE_SIZE, y * TILE_SIZE);
+	mlx_put_image_to_window(
+		g->mlx,
+		g->win,
+		img,
+		x * TILE_SIZE,
+		y * TILE_SIZE);
 }
 
 void	render_map(t_game *g)

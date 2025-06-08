@@ -6,13 +6,12 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:11:27 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 19:36:12 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/09 00:52:20 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/* 解析 .ber 文件，转换为二维字符数组 */
 char	**read_map(char *filename)
 {
 	int		fd;
@@ -35,37 +34,21 @@ char	**read_map(char *filename)
 		free(tmp);
 		line = get_next_line(fd);
 	}
-	ft_printf("FULL MAP:\n%s\n", map_str);
 	close(fd);
 	map = ft_split(map_str, '\n');
-	ft_printf("MAP_STR = [%s]\n", map_str);
 	free(map_str);
 	return (map);
 }
 
-/* 验证地图是否合法（封闭、字符合法、路径可达） */
 int	validate_map(t_map *map)
 {
 	if (!check_rectangle(map))
-	{
 		error_exit("Map is not rectangular");
-		return (0);
-	}
 	if (!check_walls(map))
-	{
 		error_exit("Map is not surrounded by walls");
-		return (0);
-	}
 	if (!check_elements(map))
-	{
-		ft_printf("Map has invalid elements ");
-		error_exit("or missing required elements");
-		return (0);
-	}
+		error_exit("Map has invalid or missing required elements");
 	if (!check_path(*map))
-	{
 		error_exit("No valid path found in the map");
-		return (0);
-	}
 	return (1);
 }

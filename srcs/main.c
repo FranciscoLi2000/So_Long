@@ -6,28 +6,18 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:17:30 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 19:42:39 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/09 00:47:19 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/* ESC 和窗口关闭时释放资源退出 */
-/* 错误退出函数 打印错误信息并退出程序 */
 void	error_exit(char *message)
 {
 	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(message, 2);
 	ft_putstr_fd("\n", 2);
 	exit(EXIT_FAILURE);
-}
-
-static void	debug_print_map_info(t_map *map)
-{
-	ft_printf("Map size: %d x %d\n", map->width, map->height);
-	ft_printf("Player pos: %d,%d\n", map->player_x, map->player_y);
-	ft_printf("Collectibles: %d\n", map->collectibles);
-	ft_printf("Exit pos: %d,%d\n", map->exit_x, map->exit_y);
 }
 
 int	main(int argc, char **argv)
@@ -44,7 +34,6 @@ int	main(int argc, char **argv)
 	game.map.collectibles = 0;
 	if (!validate_map(&game.map))
 		error_exit("Invalid map");
-	debug_print_map_info(&game.map);
 	init_game(&game);
 	render_map(&game);
 	mlx_hook(game.win, 2, 1L << 0, handle_key, &game);

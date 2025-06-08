@@ -6,13 +6,12 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 16:12:57 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 17:18:29 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/09 00:54:58 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/* 检查地图是否是矩形 */
 int	check_rectangle(t_map *map)
 {
 	int	i;
@@ -27,7 +26,6 @@ int	check_rectangle(t_map *map)
 	return (1);
 }
 
-/* 检查地图是否被墙壁包围 */
 int	check_walls(t_map *map)
 {
 	int	i;
@@ -74,7 +72,6 @@ int	check_cell(t_map *map, int i, int j)
 	return (1);
 }
 
-/* 检查地图元素是否有效 */
 int	check_elements(t_map *map)
 {
 	int	i;

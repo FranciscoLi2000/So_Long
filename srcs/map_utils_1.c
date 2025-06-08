@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:33:14 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 20:39:13 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/09 00:53:40 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,6 @@ void	free_map_copy(char **map)
 	free(map);
 }
 
-static void	debug_print_filled_map(char **map)
-{
-	int	y = 0;
-	while (map[y])
-	{
-		ft_printf("%s\n", map[y]);
-		y++;
-	}
-}
-
 int	check_path(t_map map)
 {
 	char		**copy;
@@ -119,8 +109,9 @@ int	check_path(t_map map)
 	input.start = (t_point){map.player_x, map.player_y};
 	input.coins = &collect;
 	input.found_exit = &found_exit;
+	collect = 0;
+	found_exit = 0;
 	flood_fill(input);
-	debug_print_filled_map(input.map);
 	free_map_copy(copy);
 	if (collect != map.collectibles || !found_exit)
 		return (0);

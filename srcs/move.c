@@ -6,14 +6,12 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:15:21 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 19:10:34 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/09 00:57:55 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/* 判断是否达到胜利条件 */
-/* 每次玩家有效移动后增加步数，并在 shell 输出 */
 static void	move_player(t_game *g, int dx, int dy)
 {
 	int		new_x;
@@ -43,7 +41,6 @@ static void	move_player(t_game *g, int dx, int dy)
 	render_map(g);
 }
 
-/* 处理按键事件 */
 int	handle_key(int key, t_game *g)
 {
 	if (key == 65307)
