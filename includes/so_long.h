@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:20:53 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 17:44:22 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/08 18:26:52 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,15 @@ char	**duplicate_map(char **src);
 void	free_map_copy(char **map);
 t_point	find_player(char **map);
 int		count_collectibles(char **map);
+int		count_lines(char **grid);
+
+/* init the game */
+void	init_window(t_game *game);
+void	load_images(t_game *game);
+void	init_game(t_game *game);
+
+/* render the game */
+void	render_map(t_game *game);
 
 /* Error handling */
 void	error_exit(char *msg);

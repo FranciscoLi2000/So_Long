@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:17:30 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/08 17:28:02 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/08 18:25:42 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,17 @@ void	error_exit(char *message)
 
 int	main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
-	ft_printf("map test OK\n");
+	t_game	game;
+
+	if (argc != 2)
+		error_exit("Usage: ./so_long map.ber");
+	game.map.grid = read_map(argv[1]);
+	game.map.height = count_lines(game.map.grid);
+	game.map.width = ft_strlen(game.map.grid[0]);
+	if (!validate_map(&game.map))
+		error_exit("Invalid map");
+	init_game(&game);
+	render_map(&game);
+	mlx_loop(game.mlx);
 	return (0);
 }
