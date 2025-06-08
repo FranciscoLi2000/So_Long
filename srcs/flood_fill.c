@@ -6,27 +6,30 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:48:03 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/07 17:51:31 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/08 09:49:33 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
 /* 使用深度优先搜索检查是否存在有效路径 */
-void	flood_fill(char **map, int x, int y, int *count)
+static void	fill(char **tab, t_point size, char target, int row, int col)
 {
-	if (map[y][x] == WALL || map[y][x] == 'V')
+	if (row < 0 || col < 0 || row >= size.y || col >= size.x)
 		return ;
-	if (map[y][x] == COLLECTIBLE)
-		(*count)++;
-	if (map[y][x] == EXIT)
-	{
-		map[y][x] = 'X';
+	if (tab[row][col] == 'F' || tab[row][col] != target)
 		return ;
-	}
-	map[y][x] = 'V';
-	flood_fill(map, x + 1, y, count);
-	flood_fill(map, x - 1, y, count);
-	flood_fill(map, x, y + 1, count);
-	flood_fill(map, x, y - 1, count);
+	tab[row][col] = 'F';
+	fill(tab, size, target, row - 1, col);
+	fill(tab, size, target, row + 1, col);
+	fill(tab, size, target, row, col - 1);
+	fill(tab, size, target, row, col + 1);
+}
+
+void	flood_fill(char **tab, t_point size, t_point begin)
+{
+	char	target;
+
+	target = tab[begin.y][begin.x];
+	fill(tab, size, target, begin.y, begin.x);
 }

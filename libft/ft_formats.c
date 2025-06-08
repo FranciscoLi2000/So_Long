@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 20:15:42 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/06 22:37:08 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/07 21:46:57 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_putchar(char c)
 {
-    return (write(1, &c, 1));
+	return (write(1, &c, 1));
 }
 
 int	ft_putstr(char *s)

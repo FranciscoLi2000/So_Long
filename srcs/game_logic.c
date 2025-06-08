@@ -6,11 +6,11 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 18:48:34 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/07 18:56:48 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/07 21:55:17 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
 /* 检查是否收集到物品 */
 void	check_collectible(t_game *game, int x, int y)
@@ -28,8 +28,8 @@ void	check_exit(t_game *game)
 	if (game->map.grid[game->map.player_y][game->map.player_x] == EXIT
 		&& game->map.collected == game->map.collectibles)
 	{
-		ft_printf("Congratulations! You escaped the British Museum in %d moves!\n",
-			game->moves);
+		ft_printf("Congratulations! You escaped the ");
+		ft_printf("British Museum in %d moves!\n", game->moves);
 		game->game_over = 1;
 	}
 }

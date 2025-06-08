@@ -6,11 +6,11 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 18:45:37 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/07 18:47:00 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/07 21:18:34 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
 /* 处理窗口关闭事件 */
 int	close_window(t_game *game)

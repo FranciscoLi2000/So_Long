@@ -72,7 +72,7 @@ static int	ft_fill_split(char **res, const char *s, char c)
 char	**ft_split(char const *s, char c)
 {
 	char	**res;
-	int			count;
+	int		count;
 
 	if (!s)
 		return (NULL);

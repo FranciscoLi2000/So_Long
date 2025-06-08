@@ -6,11 +6,11 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:10:34 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/07 17:22:25 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/07 21:17:52 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
 /* 错误退出函数 打印错误信息并退出程序 */
 void	error_exit(char *message)

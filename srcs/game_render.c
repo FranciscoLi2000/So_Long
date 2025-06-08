@@ -6,11 +6,11 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 18:02:05 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/07 18:45:28 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/07 21:17:44 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
 /* 渲染单个图块 */
 static void	render_tile(t_game *game, void *img, int x, int y)

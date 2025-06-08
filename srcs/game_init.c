@@ -6,11 +6,11 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:52:16 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/07 18:01:53 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/07 21:54:06 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
 /* 初始化地图数据 */
 void	init_map_data(t_map *map)
@@ -40,19 +40,15 @@ static void	*load_xpm_image(void *mlx, char *path, int *width, int *height)
 int	load_images(t_game *game)
 {
 	game->img_player.img = load_xpm_image(game->mlx,
-					"./assets/player.xpm",
-					&game->img_player.width,
-					&game->img_player.height);
-	game->img_wall.img = load_xpm_image(game->mlx, "./assets/wall.xpm",
-			&game->img_wall.width, &game->img_wall.height);
+	"../textures/player.xpm", &game->img_player.width, &game->img_player.height);
+	game->img_wall.img = load_xpm_image(game->mlx,
+	"../textures/wall.xpm", &game->img_wall.width, &game->img_wall.height);
 	game->img_collectible.img = load_xpm_image(game->mlx,
-					"./assets/collectible.xpm",
-					&game->img_collectible.width,
-					&game->img_collectible.height);
-	game->img_exit.img = load_xpm_image(game->mlx, "./assets/exit.xpm",
-			&game->img_exit.width, &game->img_exit.height);
-	game->img_floor.img = load_xpm_image(game->mlx, "./assets/floor.xpm",
-			&game->img_floor.width, &game->img_floor.height);
+	"../textures/collectible.xpm", &game->img_collectible.width, &game->img_collectible.height);
+	game->img_exit.img = load_xpm_image(game->mlx,
+	"../textures/exit.xpm", &game->img_exit.width, &game->img_exit.height);
+	game->img_floor.img = load_xpm_image(game->mlx,
+	"../textures/floor.xpm", &game->img_floor.width, &game->img_floor.height);
 	if (!game->img_player.img || !game->img_wall.img
 		|| !game->img_collectible.img || !game->img_exit.img
 		|| !game->img_floor.img)

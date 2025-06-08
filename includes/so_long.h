@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:05:10 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/07 19:17:54 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/07 21:35:36 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,29 @@ typedef struct s_game
 	int		game_over;
 }	t_game;
 
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
 int		parse_map(t_game *game, char *filename);
 void	free_map(t_map *map);
 int		validate_map(t_map *map);
-void	flood_fill(char **map, int x, int y, int *count);
+void	flood_fill(char **tab, t_point size, t_point begin);
 int		init_game(t_game *game);
 int		load_images(t_game *game);
 void	init_map_data(t_map *map);
-/* game_render.c */
 void	render_game(t_game *game);
 void	render_moves(t_game *game);
-/* game_events.c */
 int		key_press(int keycode, t_game *game);
 int		close_window(t_game *game);
-/* game_logic.c */
 int		move_player(t_game *game, int new_x, int new_y);
 void	check_collectible(t_game *game, int x, int y);
 void	check_exit(t_game *game);
-/* main.c */
+char	**duplicate_map(t_map *map);
+int		is_exit_reachable(char **tmp_map, int height);
+int		validate_structure(t_map *map);
 void	error_exit(char *message);
 void	clean_exit(t_game *game, int status);
 
