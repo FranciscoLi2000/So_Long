@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:20:53 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/09 00:24:32 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/09 02:11:50 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_game
 	void	*img_exit;
 	void	*img_collect;
 	int		moves;
+	int		win_status;
 }	t_game;
 
 typedef struct s_ff_input

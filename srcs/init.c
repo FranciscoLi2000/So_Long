@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:12:47 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/09 00:48:54 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/09 02:12:25 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ void	init_game(t_game *game)
 	init_window(game);
 	load_images(game);
 	game->moves = 0;
+	game->win_status = 0;
 }
