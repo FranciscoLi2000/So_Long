@@ -3,36 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/04 00:04:29 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/04 01:54:13 by yufli            ###   ########.fr       */
+/*   Created: 2024/12/28 16:33:37 by yufli             #+#    #+#             */
+/*   Updated: 2024/12/30 13:30:59 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "libft.h"
 
-int	ft_atoi(char *str)
+int	ft_atoi(const char *str)
 {
 	int	i;
 	int	sign;
-	int	result;
+	int	num;
 
 	i = 0;
-	sign = 1;
-	result = 0;
-	while (ft_isspace(str[i]))
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
+		|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
 		i++;
-	while (str[i] == '+' || str[i] == '-')
+	sign = 1;
+	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
-			sign = -sign;
+			sign = -1;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	num = 0;
+	while (str[i] >= 48 && str[i] <= 57)
 	{
-		result = result * 10 + (str[i] - '0');
+		num = num * 10 + (str[i] - '0');
 		i++;
 	}
-	return (result * sign);
+	return (sign * num);
 }

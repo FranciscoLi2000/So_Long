@@ -3,47 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/04 00:41:15 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/04 13:03:59 by yufli            ###   ########.fr       */
+/*   Created: 2024/12/29 15:33:45 by yufli             #+#    #+#             */
+/*   Updated: 2025/01/02 19:26:06 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <stdlib.h>
 #include "libft.h"
 
-static char	*empty_string(void)
+char	*ft_substr(char const *s, unsigned int start, unsigned int len)
 {
-	char	*sub;
+	unsigned int	i;
+	char			*substr;
 
-	sub = (char *)malloc(1 * sizeof(char));
-	if (sub)
-		sub[0] = '\0';
-	return (sub);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*sub;
-	size_t	i;
-	size_t	s_len;
-
-	if (!s)
-		return (NULL);
-	s_len = ft_strlen((char *)s);
-	if (start >= s_len)
-		return (empty_string());
-	if (len > s_len - start)
-		len = s_len - start;
-	sub = (char *)malloc((len + 1) * sizeof(char));
-	if (!sub)
+	if (start >= (unsigned int)ft_strlen(s))
+	{
+		substr = malloc(sizeof(char));
+		if (substr == NULL)
+			return (NULL);
+		substr[0] = '\0';
+		return (substr);
+	}
+	if (len > (unsigned int)ft_strlen(s) - start)
+		len = (unsigned int)ft_strlen(s) - start;
+	substr = malloc((len + 1) * sizeof(char));
+	if (substr == NULL || s == NULL)
 		return (NULL);
 	i = 0;
-	while (i < len)
+	while (i < len && s[start + i] != '\0')
 	{
-		sub[i] = s[start + i];
+		substr[i] = s[start + i];
 		i++;
 	}
-	sub[i] = '\0';
-	return (sub);
+	substr[i] = '\0';
+	return (substr);
 }

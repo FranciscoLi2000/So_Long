@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/04 00:06:49 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/04 00:06:57 by yufli            ###   ########.fr       */
+/*   Created: 2024/12/27 13:22:05 by yufli             #+#    #+#             */
+/*   Updated: 2024/12/27 13:41:40 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "libft.h"
 
 int	ft_isalpha(int c)

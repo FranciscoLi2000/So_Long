@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:15:21 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/09 02:25:15 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/12 14:11:04 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	move_player(t_game *g, int dx, int dy)
 	if (next_tile == COLLECTIBLE)
 		g->map.collectibles--;
 	if (next_tile == EXIT && g->map.collectibles > 0)
-		return ;	
+		return ;
 	g->map.grid[g->map.player_y][g->map.player_x] = EMPTY;
 	g->map.player_x = new_x;
 	g->map.player_y = new_y;
@@ -34,10 +34,11 @@ static void	move_player(t_game *g, int dx, int dy)
 	g->moves++;
 	ft_printf("Moves: %d\n", g->moves);
 	if (next_tile == EXIT && g->map.collectibles == 0)
-        {
-                g->win_status = 1;
-                ft_printf("Jackie Chan won in %d moves!\n", ++g->moves);
-        }
+	{
+		ft_printf("Jackie Chan won in %d moves!\n", ++g->moves);
+		mlx_destroy_window(g->mlx, g->win);
+		exit(0);
+	}
 	render_map(g);
 }
 
