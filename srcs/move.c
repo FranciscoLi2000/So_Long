@@ -6,7 +6,7 @@
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 11:15:21 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/12 14:11:04 by yufli            ###   ########.fr       */
+/*   Updated: 2025/06/09 03:29:01 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ static void	move_player(t_game *g, int dx, int dy)
 	ft_printf("Moves: %d\n", g->moves);
 	if (next_tile == EXIT && g->map.collectibles == 0)
 	{
+		g->win_status = 1;
 		ft_printf("Jackie Chan won in %d moves!\n", ++g->moves);
-		mlx_destroy_window(g->mlx, g->win);
-		exit(0);
 	}
 	render_map(g);
 }
