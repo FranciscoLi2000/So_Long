@@ -1,93 +1,85 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/06 17:04:47 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/06 18:20:51 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "libft.h"
 
-#include "get_next_line.h"
-
-/* Store leftover data between calls to get_next_line() 
-so that you can resume reading where you left off. */
-
-/* Allocate space with malloc() for each line 
-as it's constructed from the buffer. */
-
-/* Stop reading when you hit \n, return everything up to and including it. */
-
-char	*ft_read_fd(int fd, char *stash)
+char	*read_to_buffer(int fd, char *buffer)
 {
-	char	buffer[BUFFER_SIZE + 1];
-	ssize_t	bytes;
+	char	*tmp;
+	int		bytes_read;
+	char	*new_buffer;
 
-	bytes = 1;
-	while (!ft_strchr(stash, '\n') && bytes > 0)
+	tmp = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!tmp)
+		return (NULL);
+	bytes_read = 1;
+	while (!ft_strchr(buffer, '\n') && bytes_read > 0)
 	{
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes < 0)
-			return (free(stash), NULL);
-		buffer[bytes] = '\0';
-		stash = ft_strjoin(stash, buffer);
+		bytes_read = read(fd, tmp, BUFFER_SIZE);
+		if (bytes_read <= 0)
+			break ;
+		tmp[bytes_read] = '\0';
+		new_buffer = ft_strjoin(buffer, tmp);
+		if (!new_buffer)
+		{
+			free(tmp);
+			return (NULL);
+		}
+		free(buffer);
+		buffer = new_buffer;
 	}
-	return (stash);
+	free(tmp);
+	return (buffer);
 }
 
-char	*ft_get_line(char *stash)
+char	*extract_line(char *buffer)
 {
-	size_t	i;
-	size_t	j;
 	char	*line;
+	int		i;
 
-	i = 0;
-	if (!stash || !stash[0])
+	if (!buffer || buffer[0] == '\0')
 		return (NULL);
-	while (stash[i] && stash[i] != '\n')
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	if (stash[i] == '\n')
+	if (buffer[i] == '\n')
 		i++;
-	line = malloc(i + 1);
+	line = malloc((i + 1) * sizeof(char));
 	if (!line)
 		return (NULL);
-	j = 0;
-	while (j < i)
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
 	{
-		line[j] = stash[j];
-		j++;
+		line[i] = buffer[i];
+		i++;
 	}
+	if (buffer[i] == '\n')
+		line[i++] = '\n';
 	line[i] = '\0';
 	return (line);
 }
 
-char	*ft_save_stash(char *stash)
+char	*update_buffer(char *buffer)
 {
-	size_t	i;
-	size_t	j;
-	char	*new_stash;
+	char	*new_buffer;
+	int		i;
+	int		j;
 
 	i = 0;
-	j = 0;
-	while (stash[i] && stash[i] != '\n')
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	if (!stash[i])
+	if (!buffer[i])
 	{
-		free(stash);
+		free(buffer);
 		return (NULL);
 	}
 	i++;
-	new_stash = malloc(ft_strlen(stash) - i + 1);
-	if (!new_stash)
-		return (NULL);
-	while (stash[i])
-		new_stash[j++] = stash[i++];
-	new_stash[j++] = stash[i++];
-	new_stash[j] = '\0';
-	free(stash);
-	return (new_stash);
+	new_buffer = malloc((ft_strlen(buffer) - i + 1) * sizeof(char));
+	if (!new_buffer)
+		return (buffer);
+	j = 0;
+	while (buffer[i])
+		new_buffer[j++] = buffer[i++];
+	new_buffer[j] = '\0';
+	free(buffer);
+	return (new_buffer);
 }
 
 char	*get_next_line(int fd)
@@ -97,10 +89,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = ft_read_fd(fd, buffer);
+	buffer = read_to_buffer(fd, buffer);
 	if (!buffer)
 		return (NULL);
-	line = ft_get_line(buffer);
-	buffer = ft_save_stash(buffer);
+	line = extract_line(buffer);
+	buffer = update_buffer(buffer);
 	return (line);
 }

@@ -1,26 +1,30 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   print_int.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/24 17:26:27 by yufli             #+#    #+#             */
-/*   Updated: 2025/02/24 22:46:38 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "libft.h"
 
-#include "../ft_printf.h"
-
-void	print_int(t_print *tab)
+static int	print_int_recursive(long nb)
 {
-	char	*str;
-	int		num;
+	char	c;
+	int		count;
 
-	num = va_arg(tab->args, int);
-	str = ft_itoa(num);
-	if (!str)
-		return ;
-	tab->tl += write(1, str, ft_strlen(str));
-	free(str);
+	count = 0;
+	if (nb >= 10)
+		count += print_int_recursive(nb / 10);
+	c = (nb % 10) + '0';
+	count += write(1, &c, 1);
+	return (count);
+}
+
+int	print_int(int n)
+{
+	long	nb;
+	int		count;
+
+	nb = n;
+	count = 0;
+	if (nb < 0)
+	{
+		count += write(1, "-", 1);
+		nb = -nb;
+	}
+	count += print_int_recursive(nb);
+	return (count);
 }

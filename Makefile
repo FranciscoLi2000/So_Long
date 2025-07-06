@@ -1,97 +1,48 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/08 17:23:02 by yufli             #+#    #+#              #
-#    Updated: 2025/06/09 03:24:10 by yufli            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# ========= CONFIG ============
+NAME		= pipex
 
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: yufli <yufli@student.42.fr>                +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/08 17:23:02 by yufli             #+#    #+#              #
-#    Updated: 2025/06/09 22:10:00 by yufli            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+CC		= cc
+CFLAGS		= -Wall -Wextra -Werror
+INCDIRS		= -Iincludes -Ilibft
 
-# === Project ===
+SRCDIR		= srcs
+OBJDIR		= objs
+LIBFTDIR	= libft
+LIBFT		= $(LIBFTDIR)/libft.a
 
-NAME        = so_long
+SRC		= $(wildcard $(SRCDIR)/*.c)
+OBJ		= $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
 
-# === Directories ===
+# ========= RULES =============
+all: $(NAME)
 
-SRC_DIR     = srcs
-INC_DIR     = includes
-LIBFT_DIR   = libft
-MLX_DIR     = minilibx_linux
+# pipex 的最终链接目标
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) $(CFLAGS) $(INCDIRS) $(OBJ) $(LIBFT) -o $(NAME)
 
-# === Flags ===
+# 自动生成 .o 文件到 objs 目录
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) $(INCDIRS) -c $< -o $@
 
-INCLUDE     = -I$(INC_DIR) -I$(LIBFT_DIR)/includes -I$(MLX_DIR)
-MLXFLAGS    = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
-CFLAGS      = -Wall -Wextra -Werror $(INCLUDE)
-
-# === Sources & Objects ===
-
-SRCS        = $(SRC_DIR)/main.c \
-              $(SRC_DIR)/init.c \
-              $(SRC_DIR)/map.c \
-              $(SRC_DIR)/map_utils_1.c \
-              $(SRC_DIR)/map_utils_2.c \
-              $(SRC_DIR)/flood_fill.c \
-              $(SRC_DIR)/render.c \
-              $(SRC_DIR)/move.c \
-              $(SRC_DIR)/utils.c
-
-OBJS        = $(SRCS:.c=.o)
-
-# === Libraries ===
-
-LIBFT       = $(LIBFT_DIR)/libft.a
-MLX         = $(MLX_DIR)/libmlx.a
-
-# === Colors ===
-
-GREEN       = \033[1;32m
-YELLOW      = \033[1;33m
-RED         = \033[1;31m
-RESET       = \033[0m
-
-# === Rules ===
-
-all: $(LIBFT) $(MLX) $(NAME)
-
+# 编译 libft
 $(LIBFT):
-	@echo "$(YELLOW)Compiling Libft...$(RESET)"
-	@make -C $(LIBFT_DIR)
+	$(MAKE) -C $(LIBFTDIR)
 
-$(MLX):
-	@echo "$(YELLOW)Compiling MiniLibX...$(RESET)"
-	@make -C $(MLX_DIR)
-
-$(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLXFLAGS) -o $(NAME)
-	@echo "$(GREEN)Compilation successful: $(NAME)$(RESET)"
-
+# ========= CLEANING ==========
 clean:
-	@rm -f $(OBJS)
-	@make -C $(LIBFT_DIR) clean
-	@make -C $(MLX_DIR) clean
-	@echo "$(YELLOW)Temporary object files cleaned.$(RESET)"
+	$(MAKE) clean -C $(LIBFTDIR)
+	rm -rf $(OBJDIR)
 
 fclean: clean
-	@rm -f $(NAME)
-	@make -C $(LIBFT_DIR) fclean
-	@echo "$(RED)Executable and all objects removed.$(RESET)"
+	$(MAKE) fclean -C $(LIBFTDIR)
+	rm -f $(NAME)
 
 re: fclean all
 
+# ========= BONUS (可选) =======
+debug:
+	$(MAKE) CFLAGS="-g3 -fsanitize=address -Wall -Wextra -Werror" re
+
+# ========= PHONY RULES ========
 .PHONY: all clean fclean re

@@ -1,29 +1,19 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 17:59:36 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/04 00:06:26 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
-void	*ft_calloc(unsigned int nmemb, unsigned int size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	unsigned int	i;
-	void			*ptr;
+	void	*ptr;
+	size_t	total;
+	size_t	i;
 
-	if (size != 0 && nmemb > (unsigned int)(-1) / size)
+	if (size != 0 && nmemb > SIZE_MAX / size)
 		return (NULL);
-	ptr = malloc(nmemb * size);
-	if (ptr == NULL)
+	total = nmemb * size;
+	ptr = malloc(total);
+	if (!ptr)
 		return (NULL);
 	i = 0;
-	while ((unsigned int)i < nmemb * size)
+	while (i < total)
 	{
 		((unsigned char *)ptr)[i] = 0;
 		i++;

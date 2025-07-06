@@ -1,38 +1,33 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/04 00:04:29 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/04 01:54:13 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
-int	ft_atoi(char *str)
+int	ft_atoi(const char *str)
 {
-	int	i;
-	int	sign;
-	int	result;
+	long	num;
+	int		i;
+	int		sign;
 
 	i = 0;
+	num = 0;
 	sign = 1;
-	result = 0;
-	while (ft_isspace(str[i]))
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	while (str[i] == '+' || str[i] == '-')
+	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
-			sign = -sign;
+			sign = -1;
 		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result = result * 10 + (str[i] - '0');
+		if (num > (LONG_MAX - (str[i] - '0')) / 10)
+		{
+			if (sign == 1)
+				return (-1);
+			else
+				return (0);
+		}
+		num = num * 10 + (str[i] - '0');
 		i++;
 	}
-	return (result * sign);
+	return ((int)(num * sign));
 }

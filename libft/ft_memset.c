@@ -1,25 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/27 14:28:56 by yufli             #+#    #+#             */
-/*   Updated: 2025/06/04 00:10:05 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
-void	*ft_memset(void *s, int c, unsigned int n)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	unsigned int	i;
+	size_t			i;
+	unsigned char		*ptr;
+	unsigned char		uc;
 
+	ptr = s;
+	uc = (unsigned char)c;
 	i = 0;
 	while (i < n)
 	{
-		((char *)s)[i] = c;
+		ptr[i] = uc;
 		i++;
 	}
 	return (s);

@@ -1,70 +1,19 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   print_hex.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/24 21:08:37 by yufli             #+#    #+#             */
-/*   Updated: 2025/02/26 19:38:21 by yufli            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "libft.h"
 
-#include "../ft_printf.h"
-
-static unsigned int	num_len_base(unsigned long long n, int base)
+int	print_hex(unsigned int n, int uppercase)
 {
-	int	len;
+	char	*base;
+	char	c;
+	int		count;
 
-	len = 0;
-	if (n == 0)
-		return (1);
-	while (n > 0)
-	{
-		n /= base;
-		len++;
-	}
-	return (len);
-}
-
-char	*ft_itoa_base(unsigned long long n, int base, int uppercase)
-{
-	char	*digits;
-	char	*str;
-	int		len;
-
-	if (base < 2 || base > 16)
-		return (NULL);
+	count = 0;
 	if (uppercase)
-		digits = "0123456789ABCDEF";
+		base = "0123456789ABCDEF";
 	else
-		digits = "0123456789abcdef";
-	len = num_len_base(n, base);
-	str = malloc(len + 1);
-	if (!str)
-		return (NULL);
-	str[len] = '\0';
-	if (n == 0)
-		str[0] = '0';
-	len--;
-	while (n > 0)
-	{
-		str[len] = digits[n % base];
-		n /= base;
-		len--;
-	}
-	return (str);
-}
-
-void	print_hex(t_print *tab, int uppercase)
-{
-	unsigned int	num;
-	char			*str;
-
-	num = va_arg(tab->args, unsigned int);
-	str = ft_itoa_base(num, 16, uppercase);
-	if (!str)
-		return ;
-	tab->tl += write(1, str, ft_strlen(str));
-	free(str);
+		base = "0123456789abcdef";
+	if (n >= 16)
+		count += print_hex(n / 16, uppercase);
+	c = base[n % 16];
+	count += write(1, &c, 1);
+	return (count);
 }
