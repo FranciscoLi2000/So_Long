@@ -1,48 +1,44 @@
 # ========= CONFIG ============
-NAME		= pipex
+NAME		= so_long
 
 CC		= cc
 CFLAGS		= -Wall -Wextra -Werror
-INCDIRS		= -Iincludes -Ilibft
 
-SRCDIR		= srcs
-OBJDIR		= objs
-LIBFTDIR	= libft
-LIBFT		= $(LIBFTDIR)/libft.a
+MLX_DIR		= ./minilibx_linux
+MLX_LIB		= $(MLX_DIR)/libmlx.a
+MLX_FLAGS	= -L$(MLX_DIR) -lmlx -lXext -lX11
+MLX_INC		= -I$(MLX_DIR)
 
-SRC		= $(wildcard $(SRCDIR)/*.c)
-OBJ		= $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
+SRCS		= \
+		main.c init_game.c render_map.c draw_tile.c input.c \
+		read_map.c check_path.c validate_map.c check_rectangle.c \
+		check_elements.c check_walls.c flood_fill.c \
+		error_exit.c free_map.c count_lines.c ft_strlen.c exit.c
+
+OBJS		= $(SRCS:.c=.o)
+
+INCLUDES	= so_long.h
 
 # ========= RULES =============
-all: $(NAME)
+all: $(MLX_LIB) $(NAME)
 
-# pipex 的最终链接目标
-$(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(INCDIRS) $(OBJ) $(LIBFT) -o $(NAME)
+$(MLX_LIB):
+	@make -C $(MLX_DIR)
 
-# 自动生成 .o 文件到 objs 目录
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) $(INCDIRS) -c $< -o $@
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME)
 
-# 编译 libft
-$(LIBFT):
-	$(MAKE) -C $(LIBFTDIR)
+%.o: %.c $(INCLUDES)
+	$(CC) $(CFLAGS) $(MLX_INC) -c $< -o $@
 
 # ========= CLEANING ==========
 clean:
-	$(MAKE) clean -C $(LIBFTDIR)
-	rm -rf $(OBJDIR)
+	rm -f $(OBJS)
+	@make -C $(MLX_DIR) clean
 
 fclean: clean
-	$(MAKE) fclean -C $(LIBFTDIR)
 	rm -f $(NAME)
 
 re: fclean all
 
-# ========= BONUS (可选) =======
-debug:
-	$(MAKE) CFLAGS="-g3 -fsanitize=address -Wall -Wextra -Werror" re
-
-# ========= PHONY RULES ========
 .PHONY: all clean fclean re
