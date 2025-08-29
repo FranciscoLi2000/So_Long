@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/08 11:12:47 by yufli             #+#    #+#             */
-/*   Updated: 2025/08/29 09:52:29 by yufli            ###   ########.fr       */
+/*   Created: 2025/08/29 09:20:55 by yufli             #+#    #+#             */
+/*   Updated: 2025/08/29 10:12:40 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init_game(t_game *game)
+char	*ft_strdup(char *src)
 {
-	init_window(game);
-	load_images(game);
-	game->moves = 0;
-	game->win_status = 0;
+	char	*res;
+	int		i;
+	int		len;
+
+	len = ft_strlen(src);
+	i = 0;
+	res = malloc((len + 1) * sizeof(char));
+	if (!res)
+		return (NULL);
+	while (src[i])
+	{
+		res[i] = src[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
 }

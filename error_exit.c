@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_exit.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/29 09:54:03 by yufli             #+#    #+#             */
+/*   Updated: 2025/08/29 09:54:18 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-void	error_exit(char *str)
+void	error_exit(char *message)
 {
-	ft_putstr_fd(str, 2);
-	ft_putchar_fd('\n', 2);
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(message, 2);
 	exit(EXIT_FAILURE);
 }

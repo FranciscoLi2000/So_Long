@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/08 11:12:47 by yufli             #+#    #+#             */
-/*   Updated: 2025/08/29 09:52:29 by yufli            ###   ########.fr       */
+/*   Created: 2025/06/04 00:36:18 by yufli             #+#    #+#             */
+/*   Updated: 2025/08/29 10:44:02 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init_game(t_game *game)
+char	*ft_strchr(const char *s, int c)
 {
-	init_window(game);
-	load_images(game);
-	game->moves = 0;
-	game->win_status = 0;
+	if (!s)
+		return (NULL);
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
 }

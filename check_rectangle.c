@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
+/*   check_rectangle.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/08 11:12:47 by yufli             #+#    #+#             */
-/*   Updated: 2025/08/29 09:52:29 by yufli            ###   ########.fr       */
+/*   Created: 2025/08/29 08:59:41 by yufli             #+#    #+#             */
+/*   Updated: 2025/08/29 09:00:39 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init_game(t_game *game)
+int	check_rectangle(t_map *map)
 {
-	init_window(game);
-	load_images(game);
-	game->moves = 0;
-	game->win_status = 0;
+	int	i;
+
+	i = 0;
+	while (i < map->height)
+	{
+		if (ft_strlen(map->grid[i]) != map->width)
+			return (0);
+		i++;
+	}
+	return (1);
 }

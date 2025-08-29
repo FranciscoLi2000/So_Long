@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/08 11:12:47 by yufli             #+#    #+#             */
-/*   Updated: 2025/08/29 09:52:29 by yufli            ###   ########.fr       */
+/*   Created: 2024/12/29 15:55:46 by yufli             #+#    #+#             */
+/*   Updated: 2025/08/29 10:32:56 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init_game(t_game *game)
+void	ft_putnbr_fd(int n, int fd)
 {
-	init_window(game);
-	load_images(game);
-	game->moves = 0;
-	game->win_status = 0;
+	if (n == -2147483648)
+	{
+		ft_putstr_fd("-2147483648", fd);
+		return ;
+	}
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		n = -n;
+	}
+	if (n >= 10)
+		ft_putnbr_fd(n / 10, fd);
+	ft_putchar_fd(n % 10 + '0', fd);
 }

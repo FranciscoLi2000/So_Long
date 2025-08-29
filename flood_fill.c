@@ -1,27 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flood_fill.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/08 12:12:28 by yufli             #+#    #+#             */
+/*   Updated: 2025/08/29 09:53:01 by yufli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-void	flood_fill(t_ff_input *in, int x, int y)
+static void	fill(t_ff_input *f, int row, int col)
 {
-	char	tile;
+	if (row < 0 || col < 0 || row >= f->size.y || col >= f->size.x)
+		return ;
+	if (f->map[row][col] == WALL || f->map[row][col] == 'F')
+		return ;
+	if (f->map[row][col] == COLLECTIBLE)
+		(*f->coins)++;
+	if (f->map[row][col] == EXIT)
+		*(f->found_exit) = 1;
+	f->map[row][col] = 'F';
+	fill(f, row - 1, col);
+	fill(f, row + 1, col);
+	fill(f, row, col - 1);
+	fill(f, row, col + 1);
+}
 
-	if (x < 0 || y < 0 || x >= in->size.x || y >= in->size.y)
-		return ;
-	/* 1. 从 start 点出发 */
-	tile = in->map[y][x];
-	/* 2. 如果当前位置不是墙（WALL = ‘1’）也没被访问过 */
-	if (tile == WALL || tile == 'F')
-		return ;
-	/* 3. 如果是 C，就 (*coins)-- */
-	if (tile == COLLECTIBLE)
-		(*in->coins)--;
-	/* 4. 如果是 E，就 *found_exit = 1 */
-	if (tile == EXIT)
-		*in->found_exit = 1;
-	/* 5. 将当前位置标记为“已访问” */
-	in->map[y][x] = 'F';
-	/* 6. 对上下左右递归调用 flood_fill() */
-	flood_fill(in, x + 1, y);
-	flood_fill(in, x - 1, y);
-	flood_fill(in, x, y + 1);
-	flood_fill(in, x, y - 1);
+void	flood_fill(t_ff_input input)
+{
+	fill(&input, input.start.y, input.start.x);
 }

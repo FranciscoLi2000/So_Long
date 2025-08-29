@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/08 11:12:47 by yufli             #+#    #+#             */
-/*   Updated: 2025/08/29 09:52:29 by yufli            ###   ########.fr       */
+/*   Created: 2024/12/31 19:14:09 by yufli             #+#    #+#             */
+/*   Updated: 2025/08/29 10:32:39 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init_game(t_game *game)
+void	ft_putstr_fd(char *s, int fd)
 {
-	init_window(game);
-	load_images(game);
-	game->moves = 0;
-	game->win_status = 0;
+	int	len;
+
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	write(fd, s, len);
 }

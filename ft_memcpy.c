@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
+/*   By: yufli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/08 11:12:47 by yufli             #+#    #+#             */
-/*   Updated: 2025/08/29 09:52:29 by yufli            ###   ########.fr       */
+/*   Created: 2024/12/27 15:43:43 by yufli             #+#    #+#             */
+/*   Updated: 2025/08/29 10:49:10 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init_game(t_game *game)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	init_window(game);
-	load_images(game);
-	game->moves = 0;
-	game->win_status = 0;
+	size_t	i;
+
+	if (dest == src)
+		return (dest);
+	i = 0;
+	while (i < n)
+	{
+		((char *)dest)[i] = ((const char *)src)[i];
+		i++;
+	}
+	return (dest);
 }

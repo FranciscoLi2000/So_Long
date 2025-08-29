@@ -1,21 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
+/*   find_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yufli <yufli@student.42barcelona.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/08 11:12:47 by yufli             #+#    #+#             */
-/*   Updated: 2025/08/29 09:52:29 by yufli            ###   ########.fr       */
+/*   Created: 2025/08/29 09:29:13 by yufli             #+#    #+#             */
+/*   Updated: 2025/08/29 09:38:04 by yufli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init_game(t_game *game)
+t_point	find_player(char **map)
 {
-	init_window(game);
-	load_images(game);
-	game->moves = 0;
-	game->win_status = 0;
+	t_point	p;
+	int		y;
+	int		x;
+
+	p.x = -1;
+	p.y = -1;
+	y = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 'P')
+			{
+				p.x = x;
+				p.y = y;
+				return (p);
+			}
+			x++;
+		}
+		y++;
+	}
+	error_exit("No player start found\n");
+	return (p);
 }
