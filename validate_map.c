@@ -20,7 +20,7 @@ int	validate_map(t_map *map)
 		error_exit("Error: Map is not surrounded by walls\n");
 	if (!check_elements(map))
 		error_exit("Error: Map has invalid or missing required elements\n");
-	if (!check_path(*map))
+	if (!check_path(map))
 		error_exit("Error: No valid path found in the map\n");
 	return (1);
 }

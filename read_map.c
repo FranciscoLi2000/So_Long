@@ -16,26 +16,29 @@ static int	count_map_lines(char *filename)
 {
 	int		fd;
 	int		lines;
-	char	buffer;
-	int		bytes_read;
+	char	*line;
 
-	lines = 0;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (-1);
-	bytes_read = read(fd, &buffer, 1);
-	while (bytes_read > 0)
+	lines = 0;
+	while ((line = get_next_line(fd)))
 	{
-		if (buffer == '\n')
-			lines++;
-		bytes_read = read(fd, &buffer, 1);
+		lines++;
+		free(line);
 	}
 	close(fd);
-	if (lines > 0 && buffer != '\n')
-		lines++;
-	if (lines == 0 && bytes_read == 0)
-		return (-1);
 	return (lines);
+}
+
+static char	*trim_newline(char *line)
+{
+	int	len;
+
+	len = ft_strlen(line);
+	if (len > 0 && line[len - 1] == '\n')
+		line[len - 1] = '\0';
+	return (line);
 }
 
 static char	**fill_grid_from_file(int fd, int lines)
@@ -44,7 +47,7 @@ static char	**fill_grid_from_file(int fd, int lines)
 	char	*line;
 	int		i;
 
-	grid = (char **)malloc(sizeof(char *) * (lines + 1));
+	grid = malloc(sizeof(char *) * (lines + 1));
 	if (!grid)
 		return (NULL);
 	i = 0;
@@ -52,16 +55,18 @@ static char	**fill_grid_from_file(int fd, int lines)
 	{
 		line = get_next_line(fd);
 		if (!line)
-		{
-			while (i > 0)
-				free(grid[--i]);
-			free(grid);
-			return (NULL);
-		}
-		grid[i] = line;
-		i++;
+			break ;
+		line = trim_newline(line);
+		grid[i++] = line;
 	}
-	grid[i] = NULL;
+	if (i != lines)
+	{
+		while (--i >= 0)
+			free(grid[i]);
+		free(grid);
+		return (NULL);
+	}
+	grid[lines] = NULL;
 	return (grid);
 }
 
@@ -70,7 +75,7 @@ char	**read_map(char *filename)
 	int		fd;
 	int		lines;
 	char	**grid;
-	
+
 	lines = count_map_lines(filename);
 	if (lines <= 0)
 		error_exit("Map is empty or invalid.\n");

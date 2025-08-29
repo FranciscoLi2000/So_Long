@@ -26,7 +26,7 @@
 # define EXIT 'E'
 # define COLLECTIBLE 'C'
 # define TILE_SIZE 64
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 42
 
 typedef struct s_point
 {

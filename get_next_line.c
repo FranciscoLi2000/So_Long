@@ -24,13 +24,18 @@ static char	*read_to_buffer(int fd, char *buffer)
 	while (!ft_strchr(buffer, '\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, tmp, BUFFER_SIZE);
-		if (bytes_read == -1)
+		if (bytes_read < 0)
 		{
 			free(tmp);
 			return (NULL);
 		}
 		tmp[bytes_read] = '\0';
 		buffer = ft_strjoin_and_free(buffer, tmp);
+		if (!buffer)
+		{
+			free(tmp);
+			return (NULL);
+		}
 	}
 	free(tmp);
 	return (buffer);
@@ -44,14 +49,14 @@ static char	*extract_line(char *buffer)
 	if (!buffer || !*buffer)
 		return (NULL);
 	i = 0;
-	while (buffer[i] != '\0' && buffer[i] != '\n')
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	line = malloc((i + 2) * sizeof(char));
+	line = malloc((i + (buffer[i] == '\n') + 1));
 	if (!line)
 		return (NULL);
 	ft_memcpy(line, buffer, i);
 	if (buffer[i] == '\n')
-		i++;
+		line[i++] = '\n';
 	line[i] = '\0';
 	return (line);
 }
@@ -63,21 +68,21 @@ static char	*clean_buffer(char *buffer)
 	int		j;
 
 	i = 0;
-	while (buffer[i] != '\n' && buffer[i] != '\0')
+	j = 0;
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	if (!buffer[i] || !buffer[i + 1])
+	if (!buffer[i])
 	{
 		free(buffer);
 		return (NULL);
 	}
-	new_buffer = malloc((ft_strlen(buffer) - i) * sizeof(char));
+	new_buffer = malloc(ft_strlen(buffer) - i);
 	if (!new_buffer)
 	{
 		free(buffer);
 		return (NULL);
 	}
 	i++;
-	j = 0;
 	while (buffer[i])
 		new_buffer[j++] = buffer[i++];
 	new_buffer[j] = '\0';
@@ -96,12 +101,6 @@ char	*get_next_line(int fd)
 	if (!buffer)
 		return (NULL);
 	line = extract_line(buffer);
-	if (!line)
-	{
-		free(buffer);
-		buffer = NULL;
-		return (NULL);
-	}
 	buffer = clean_buffer(buffer);
 	return (line);
 }
